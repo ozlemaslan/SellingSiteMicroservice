@@ -2,6 +2,9 @@
 
 namespace EventBus.Base
 {
+    /// <summary>
+    /// Dışarıdan bize gönderilen integrationEventin tipinin burada tutulması için
+    /// </summary>
     public class SubscriptionInfo
     {
         public Type HandlerType { get; set; }
