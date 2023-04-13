@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 
 namespace EventBus.Base.Abstraction
 {
+    /// <summary>
+    /// Hangi eventi subscribe edeceklerini söyleyen interface
+    /// </summary>
     public interface IEventBus
     {
         void Publish(IntegrationEvent @event);

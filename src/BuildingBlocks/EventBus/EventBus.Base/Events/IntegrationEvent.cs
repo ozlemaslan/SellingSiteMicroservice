@@ -3,6 +3,9 @@ using System;
 
 namespace EventBus.Base.Events
 {
+    /// <summary>
+    /// Servisler arası event için yazıldı.
+    /// </summary>
     public class IntegrationEvent
     {
         [JsonProperty]

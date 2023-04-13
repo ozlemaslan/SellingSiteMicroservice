@@ -13,7 +13,7 @@ namespace CatalogService.Api.Infrastructure.EntityConfigurations
 
             builder.HasKey(p => p.Id);
 
-            builder.Property(p => p.Id).UseHiLo("catalog_brand_hilo").IsRequired();
+            builder.Property(p => p.Id).UseHiLo("catalog_brand_hilo").IsRequired(); //hilo algoritmasına göre sql de automatic arttıran algo
 
             builder.Property(p => p.Brand).IsRequired().HasMaxLength(128);
         }

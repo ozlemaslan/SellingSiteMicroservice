@@ -160,6 +160,6 @@ namespace EventBus.RabbitMQ
             }
 
             consumerChannel.BasicAck(eventArgs.DeliveryTag, multiple: false);
-        }
+         }
     }
 }
