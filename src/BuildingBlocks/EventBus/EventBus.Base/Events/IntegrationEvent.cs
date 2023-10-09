@@ -4,7 +4,7 @@ using System;
 namespace EventBus.Base.Events
 {
     /// <summary>
-    /// Servisler arası event için yazıldı.
+    /// Servisler arası event için yazıldı. Yani rabbitMq vs ile diğer servislerin haberleşmesi için oluşturulan event
     /// </summary>
     public class IntegrationEvent
     {

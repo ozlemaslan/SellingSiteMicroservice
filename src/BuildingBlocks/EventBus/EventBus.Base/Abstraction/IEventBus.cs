@@ -8,7 +8,7 @@ namespace EventBus.Base.Abstraction
     /// </summary>
     public interface IEventBus
     {
-        void Publish(IntegrationEvent @event);
+        void Publish(IntegrationEvent @event); // servisimiz event fırlatacağı zaman bu metodu çağıracak.
         void Subscribe<T, TH>() where T : IntegrationEvent where TH : IIntegrationEventHandler<T>;
         void UnSubscribe<T, TH>() where T : IntegrationEvent where TH : IIntegrationEventHandler<T>;
     }

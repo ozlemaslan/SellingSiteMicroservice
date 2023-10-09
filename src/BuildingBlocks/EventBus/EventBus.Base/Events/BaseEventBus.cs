@@ -43,7 +43,13 @@ namespace EventBus.Base.Events
             EventBusConfig = null;
             SubsManager.Clear();
         }
-
+        /// <summary>
+        /// Rabbitmq dan veya azure servise bus tan bizim tarafımıza ulaştırılmış event 
+        /// Mesela OrderCreated eventini dinliyoruz Rabbitmqda,al bak sana şu event şu mesajla gelmiş deyip bu metoda düşeceğiz.
+        /// </summary>
+        /// <param name="eventName"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public async Task<bool> ProcessEvent(string eventName, string message)
         {
             eventName = ProcessEventName(eventName);

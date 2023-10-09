@@ -73,6 +73,7 @@ namespace EventBus.RabbitMQ
             var eventName = @event.GetType().Name;
             eventName = ProcessEventName(eventName);
 
+            // exchange oluştuyoruz.
             consumerChannel.ExchangeDeclare(exchange: EventBusConfig.DefaultTopicName, type: "direct");
 
             var message = JsonConvert.SerializeObject(@event);
@@ -102,7 +103,7 @@ namespace EventBus.RabbitMQ
                 {
                     persistentConnection.TryConnect();
                 }
-
+                //queue oluşturuyoruz.
                 consumerChannel.QueueDeclare(queue: GetSubName(eventName), durable: true, exclusive: false, autoDelete: false, arguments: null);
 
                 consumerChannel.QueueBind(queue: GetSubName(eventName), exchange: EventBusConfig.DefaultTopicName, routingKey: eventName);

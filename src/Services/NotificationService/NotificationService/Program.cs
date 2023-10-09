@@ -9,11 +9,11 @@ using Microsoft.Extensions.Logging;
 
 namespace NotificationService
 {
-    internal class Program
+    class Program
     {
         static void Main(string[] args)
         {
-            ServiceCollection services = new();
+            ServiceCollection services = new ServiceCollection();
             ConfigureService(services);
 
             var sp = services.BuildServiceProvider();

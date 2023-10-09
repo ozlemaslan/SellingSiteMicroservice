@@ -13,6 +13,11 @@ namespace EventBus.Base
             HandlerType= handlerType ?? throw new ArgumentNullException(nameof(handlerType));
         }
 
+        /// <summary>
+        /// IntegrationEventin tipinin tutulmasını sağlar.
+        /// </summary>
+        /// <param name="handlerType"></param>
+        /// <returns></returns>
         public static SubscriptionInfo Typed(Type handlerType)
         {
             return new SubscriptionInfo(handlerType);
