@@ -4,6 +4,7 @@ using CatalogService.Api.Infrastructure;
 using CatalogService.Api.Infrastructure.Context;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,10 +20,10 @@ namespace CatalogService.Api.Controllers
         private readonly CatalogContext _catalogContext;
         private readonly CatalogSettings _settings;
 
-        public CatalogController(CatalogContext catalogContext, CatalogSettings settings)
+        public CatalogController(CatalogContext catalogContext, IOptionsSnapshot<CatalogSettings> settings)
         {
             _catalogContext = catalogContext ?? throw new ArgumentNullException(nameof(catalogContext));
-            _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+            _settings = settings.Value;
 
             catalogContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
