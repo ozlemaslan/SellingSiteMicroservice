@@ -32,11 +32,6 @@ namespace PaymentService.Api.IntegrationEvents.EventHandlers
 
             Logger.LogInformation($"OrderCreatedIntegrationEventHandler in PaymentService is fired with PaymentSuccess: {paymentSuccessFlag}, orderId:{@event.OrderId}");
 
-
-            //  paymentEvent.CorrelationId = @event.CorrelationId;
-
-            //    Log.BindProperty("CorrelationId", @event.CorrelationId, false, out LogEventProperty p);
-
             EventBus.Publish(paymentEvent);
 
 

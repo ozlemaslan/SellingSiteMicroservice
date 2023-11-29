@@ -1,11 +1,11 @@
+using CatalogService.Api.Extensions;
+using CatalogService.Api.Infrastructure.Context;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace CatalogService.Api
 {
@@ -13,14 +13,41 @@ namespace CatalogService.Api
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var hostBuilder = CreateHostBuilder(args);
+
+            // Ýlk baþta seed migrationu basar.
+            hostBuilder.MigrateDbContext<CatalogContext>((context, services) =>
+            {
+                var env = services.GetRequiredService<IWebHostEnvironment>();
+                var logger = services.GetRequiredService<ILogger<CatalogContextSeed>>();
+
+                new CatalogContextSeed()
+                .SeedAsync(context, env, logger)
+                .Wait();
+
+            });
+
+            hostBuilder.Run();
+
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+        /// <summary>
+        /// Catalog iþlemler için Pics kalsöründeki dosyalara eriþir.Bu klasörde satýlacak ürünlerin fotolar vardýr. 
+        /// Ýlk baþta catalog servisinde burasý çalýþmalý.
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public static IWebHost CreateHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+            .UseDefaultServiceProvider((context, options) =>
+            {
+                options.ValidateOnBuild = false;
+                options.ValidateScopes = false;
+            })
+            .UseStartup<Startup>()
+            .UseWebRoot("Pics")
+            .UseContentRoot(Directory.GetCurrentDirectory())
+            .Build();
+
     }
 }
