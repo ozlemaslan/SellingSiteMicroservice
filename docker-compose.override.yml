@@ -1,0 +1,33 @@
+version: '3.4'
+
+services:
+  catalogservice.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "80"
+      - "443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  s_rabbitmq:
+	container_name: c_rabbitmq
+	image: rabbitmq:3-management
+	ports:
+	  - 5672:5672
+	  - 15672:15672
+	volumes:
+	  - rabbitmq:/var/lib/rabbitmq
+
+  s_consul:
+    container_name: c_consul
+    image: consul
+    ports:
+      - 8500:8500
+      - 8600:8600/tcp
+      - 8600:8600/udp
+
+ volumes:
+	rabbitmq:
