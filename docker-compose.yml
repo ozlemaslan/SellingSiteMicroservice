@@ -1,11 +1,11 @@
 version: '3.4'
 
 services:
-  catalogservice.api:
-    image: ${DOCKER_REGISTRY-}catalogserviceapi
-    build:
-      context: .
-      dockerfile: src/Services/CatalogService/CatalogService.Api/Dockerfile
+  #catalogservice.api:
+  #  image: ${DOCKER_REGISTRY-}catalogserviceapi
+  #  build:
+  #    context: .
+  #    dockerfile: src/Services/CatalogService/CatalogService.Api/Dockerfile
 
 
   s_rabbitmq:
@@ -15,5 +15,5 @@ services:
 
   s_consul:
     container_name: c_consul
-    image: consul
+    image: consul:1.15
 
