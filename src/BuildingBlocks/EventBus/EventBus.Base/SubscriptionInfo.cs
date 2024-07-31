@@ -3,7 +3,7 @@
 namespace EventBus.Base
 {
     /// <summary>
-    /// Dışarıdan bize gönderilen integrationEventin tipinin burada tutulması için
+    /// Dışarıdan bize gönderilen integrationEventin tipinden hangi handler classı olacağını bulmak için yapıldı.
     /// </summary>
     public class SubscriptionInfo
     {

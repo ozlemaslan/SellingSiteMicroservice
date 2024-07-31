@@ -8,9 +8,8 @@ namespace EventBus.Base.Events
     /// </summary>
     public class IntegrationEvent
     {
-        [JsonProperty]
         public Guid Id { get;private set; }
-        [JsonProperty]
+
         public DateTime CreatedDate { get;private set; }
 
         public IntegrationEvent()
@@ -19,7 +18,7 @@ namespace EventBus.Base.Events
             CreatedDate = DateTime.Now;
         }
 
-        [JsonConstructor]
+        [JsonConstructor] //json kullanılarak bir serilization işlemi yapıldığında diyelim ki buradan alarak dışardan gelen parametreleri set etmek için yazıldı.
         public IntegrationEvent(Guid id, DateTime createdDate)
         {
             Id= id;

@@ -143,7 +143,7 @@ namespace CatalogService.Api.Infrastructure.Context
             var catalogBrandIdLookup = context.CatalogBrands.ToDictionary(ct => ct.Brand, ct => ct.Id);
 
             return File.ReadAllLines(fileName)
-                        .Skip(1) // skip header row
+                        .Skip(1) //ilk satırı atladık çünkü txt de ilk satırda header var
                         .Select(row => row.Split(','))
                         .Select(column => new CatalogItem()
                         {

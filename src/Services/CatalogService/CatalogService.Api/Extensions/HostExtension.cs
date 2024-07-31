@@ -57,7 +57,7 @@ namespace CatalogService.Api.Extensions
         /// <param name="services"></param>
         private static void InvokeSeeder<TContext>(Action<TContext, IServiceProvider> seeder, TContext context, IServiceProvider services) where TContext : DbContext
         {
-            context.Database.EnsureCreated();
+            context.Database.EnsureCreated();// db nin oluşturulup oluşturulmadığı bilgisinden emin olan metot
             context.Database.Migrate();
             seeder(context, services);
         }

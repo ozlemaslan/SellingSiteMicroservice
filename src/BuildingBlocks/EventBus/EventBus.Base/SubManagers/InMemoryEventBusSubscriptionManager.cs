@@ -6,13 +6,16 @@ using System.Linq;
 
 namespace EventBus.Base.SubManagers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class InMemoryEventBusSubscriptionManager : IEventBusSubscriptionManager
     {
-        private readonly Dictionary<string, List<SubscriptionInfo>> _handlers;
+        private readonly Dictionary<string, List<SubscriptionInfo>> _handlers; //Handleları tutabilmek için dictionary yaptık.
         private readonly List<Type> _eventTypes;
 
         public event EventHandler<string> OnEventRemoved;
-        public Func<string, string> eventNameGetter;
+        public Func<string, string> eventNameGetter; // Dışardan bize gelen eventin adı mesela özlemIntegrationEvent. Tüm eventlerin sonunda veya başında IntegrationEvent var mesela bu metot sonunda veya başında bulunan IntegrationEvent kısmını siler.
 
         public InMemoryEventBusSubscriptionManager(Func<string, string> eventNameGetter)
         {

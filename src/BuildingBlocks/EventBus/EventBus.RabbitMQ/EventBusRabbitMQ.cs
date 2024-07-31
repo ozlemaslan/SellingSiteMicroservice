@@ -23,7 +23,7 @@ namespace EventBus.RabbitMQ
             {
                 var connJson = JsonConvert.SerializeObject(EventBusConfig.Connection, new JsonSerializerSettings()
                 {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    //ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 });
 
                 connectionFactory = JsonConvert.DeserializeObject<ConnectionFactory>(connJson);
@@ -67,7 +67,6 @@ namespace EventBus.RabbitMQ
                 .Or<SocketException>()
                 .WaitAndRetry(EventBusConfig.ConnectionRetryCount, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (ex, time) =>
                 {
-                    //logging
                 });
 
             var eventName = @event.GetType().Name;

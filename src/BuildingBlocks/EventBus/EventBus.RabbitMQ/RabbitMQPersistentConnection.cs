@@ -35,7 +35,7 @@ namespace EventBus.RabbitMQ
 
         public bool TryConnect()
         {
-            lock (lock_object)
+            lock (lock_object) //TryConnect meot çağrıldığında bir önceki işlemin bitmesini beklesin diye lock eklendi.
             {
                 //policy bizim için retry mekanizması geliştirecek.
                 var policy = Policy.Handle<SocketException>()
