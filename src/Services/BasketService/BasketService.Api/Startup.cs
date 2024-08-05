@@ -1,16 +1,13 @@
+using BasketService.Api.Extensions;
+using EventBus.Base;
+using EventBus.Base.Abstraction;
+using EventBus.Factory;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BasketService.Api
 {
@@ -32,10 +29,14 @@ namespace BasketService.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BasketService.Api", Version = "v1" });
             });
+
+            ConfigureServicesExtension(services);
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)
         {
             if (env.IsDevelopment())
             {
@@ -54,6 +55,29 @@ namespace BasketService.Api
             {
                 endpoints.MapControllers();
             });
+
+            app.RegisterWithConsul(lifetime);
+        }
+
+        private void ConfigureServicesExtension(IServiceCollection services)
+        {
+            services.ConfigureAuth(Configuration);
+            services.ConfigureConsul(Configuration);
+            services.AddSingleton(sp => sp.ConfigureRedis(Configuration));
+
+            services.AddSingleton<IEventBus>(sp =>
+            {
+                EventBusConfig config = new EventBusConfig()
+                {
+                    EventNameSuffix = "IntegrationEvent",
+                    EventBusType = EventBusType.RabbitMQ,
+                    ConnectionRetryCount = 5,
+                    SubscriberClientAppName = "BasketService"
+                };
+
+                return EventBusFactory.Create(config, sp);
+            });
+
         }
     }
 }

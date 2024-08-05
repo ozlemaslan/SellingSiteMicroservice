@@ -27,5 +27,12 @@ services:
       - 8600:8600/tcp
       - 8600:8600/udp
 
+
+  s_redis:
+    container_name: c_redis
+    image: redis
+    ports:
+      - 6379:6379
+
 volumes:
     rabbitmq:

@@ -17,3 +17,9 @@ services:
     container_name: c_consul
     image: consul:1.15
 
+
+  s_redis:
+    container_name: c_redis
+    image: redis
+    ports:
+     - 6379:6379
