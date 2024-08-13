@@ -5,7 +5,7 @@
       "DownstreamScheme": "http",
       "ServiceName": "CatalogService",
       "UseServiceDiscovery": true,
-     
+
       "UpstreamPathTemplate": "/catalog/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
     },
@@ -17,6 +17,15 @@
 
       "UpstreamPathTemplate": "/auth",
       "UpstreamHttpMethod": [ "Get", "Post" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/basket/{everything}",
+      "DownstreamScheme": "http",
+      "ServiceName": "BasketService",
+      "UseServiceDiscovery": true,
+
+      "UpstreamPathTemplate": "/basket/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
     }
   ],
   "GlobalConfiguration": {

@@ -1,4 +1,7 @@
+using BasketService.Api.Core.Application.Repository;
+using BasketService.Api.Core.Application.Services;
 using BasketService.Api.Extensions;
+using BasketService.Api.Infrastructure;
 using EventBus.Base;
 using EventBus.Base.Abstraction;
 using EventBus.Factory;
@@ -32,7 +35,6 @@ namespace BasketService.Api
 
             ConfigureServicesExtension(services);
 
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +51,7 @@ namespace BasketService.Api
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -64,6 +67,11 @@ namespace BasketService.Api
             services.ConfigureAuth(Configuration);
             services.ConfigureConsul(Configuration);
             services.AddSingleton(sp => sp.ConfigureRedis(Configuration));
+
+            services.AddHttpContextAccessor();
+
+            services.AddScoped<IBasketRepository, BasketRepository>();
+            services.AddScoped<IIdentityService, IdentityService>();
 
             services.AddSingleton<IEventBus>(sp =>
             {
