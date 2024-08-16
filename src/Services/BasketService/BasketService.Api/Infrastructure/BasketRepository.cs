@@ -28,6 +28,11 @@ namespace BasketService.Api.Infrastructure
         {
             var redisValue = await _database.StringGetAsync(customerId);
 
+            if (redisValue.IsNullOrEmpty)
+            {
+                return null;
+            }
+
             var cb = JsonConvert.DeserializeObject<CustomerBasket>(redisValue);
 
             return cb;

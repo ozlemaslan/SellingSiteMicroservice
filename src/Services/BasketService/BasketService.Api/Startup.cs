@@ -2,6 +2,8 @@ using BasketService.Api.Core.Application.Repository;
 using BasketService.Api.Core.Application.Services;
 using BasketService.Api.Extensions;
 using BasketService.Api.Infrastructure;
+using BasketService.Api.IntegrationEvents.EventHandlers;
+using BasketService.Api.IntegrationEvents.Events;
 using EventBus.Base;
 using EventBus.Base.Abstraction;
 using EventBus.Factory;
@@ -86,6 +88,13 @@ namespace BasketService.Api
                 return EventBusFactory.Create(config, sp);
             });
 
+            services.AddScoped<OrderCreatedIntegrationEventHandler>();
+
+            var sp = services.BuildServiceProvider();
+
+            IEventBus eventBus = sp.GetRequiredService<IEventBus>();
+
+            eventBus.Subscribe<OrderCreatedIntegrationEvent, OrderCreatedIntegrationEventHandler>();
         }
     }
 }
